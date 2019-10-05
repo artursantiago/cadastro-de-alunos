@@ -1,0 +1,39 @@
+.container{
+    font-family: sans-serif;
+    width: 600px;
+    margin: 0px auto;
+}
+
+header h1{
+    border: 1px solid black;
+    background-color: blue;
+    color: white;
+    text-align: center;
+    padding: 30px;
+    
+}
+
+main{
+    padding-left: 20px;
+}
+
+main div{
+    padding-left: 30px;
+
+}
+
+main .icone_cadastro, img{
+    width: 20px;
+}
+
+main p{
+    display: inline-block;
+    padding-left: 15px;
+}
+
+table th, td{
+    font-weight: normal;
+    text-align: left;
+    padding-right: 30px;
+    padding-top: 5px;
+}
