@@ -38,7 +38,7 @@ main div form label, main div form input{
 main div form{
     position: relative;
 }
-.ano, .matricula, .nome{
+.ano, .matricula, .nome, .curso{
     position: absolute;
     border-radius: 5px;
     border: 2px solid #ccc;
@@ -52,6 +52,9 @@ main div form{
     width: 70px;
 }
 .nome{
+    width: 300px;
+}
+.curso{
     width: 300px;
 }
 .confirmarBtn{
