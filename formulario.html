@@ -1,0 +1,139 @@
+<!DOCTYPE html lang="pt-br">
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="css/estilo_formulario.css">
+        <title>Formulário de Novo Aluno</title>
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <h1>Universidade Equipe Orbitais</h1>
+            </header>
+            <main>
+                <h2>Formulário para Cadastro de Novo Aluno</h2>
+                <div>
+                    <a href="index.html"><img class="icone_casa" src="imagens/home.png" alt=""></a>
+                    <p>Página Inicial</p>
+
+                    <form action="">
+                        <label for="matricula">Matricula:</label>
+                        <input class="matricula" name="matricula" maxlength="50">
+                        <br>
+                        <label for="nome">Nome: </label>
+                        <input class="nome" type="text" name="nome" maxlength="50">
+                        <br>
+                        <label for="ano">Ano de Ingresso: </label>
+                        <input class="ano" name="ano">
+                        <br>
+                        <input class="confirmarBtn" type="submit" value="Connfirmar">
+                        <a href="index.html"><input class="cancelarBtn" type="button" value="Cancelar"></a>
+                    </form>
+                </div>
+            </main>
+        </div>
+        <script>
+
+            //Variáveis Globais - HTML
+            var campo_matricula = document.querySelector("input.matricula");
+            var campo_nome = document.querySelector("input.nome");
+            var campo_ano = document.querySelector("input.ano");
+            var botao_confirmar = document.querySelector("input.confirmarBtn");
+            var botao_cancelar = document.querySelector("input.cancelarBtn");
+
+            var idAcao = Number(localStorage.getItem("idAcao"));
+
+            
+            //Sequencia
+            var alunosSeq = Number(localStorage.getItem("alunosSeq"));
+            if(! alunosSeq ){
+                alunosSeq = 0;
+            }
+
+            //Objetos
+            var ListaAlunos = JSON.parse(localStorage.getItem("ListaAlunos"));
+            if(! ListaAlunos ){
+                ListaAlunos = {Alunos:[]};
+            }
+
+            //JSON
+            var myJSON;
+
+            //Funções
+            function verificaDados(event) {
+                //Validação dos campos do formulário
+                var regex = /^[a-zA-ZéúíóáÉÚÍÓÁèùìòàçÇÈÙÌÒÀõãñÕÃÑêûîôâÊÛÎÔÂëÿüïöäËYÜÏÖÄ\-\ \s]+$/;
+                if (campo_matricula.value == "" || campo_nome.value == "" || campo_ano.value == "") {
+                    alert("Dados Inválidos! Tente Novamente.");
+                }
+                else if (! campo_nome.value.match(regex)) {
+                    alert("Nome Inválido!");
+                }
+                else if(campo_matricula.value.length > 50){
+                    alert("Limite Máximo de 50 caracteres para a matrícula excedidos!");
+                }
+                else if (campo_ano.value.length > 4 || campo_ano.value.length < 4) {
+                    alert("Ano Inválido!");
+                }
+                else{
+                    armazenarDados(event);
+                }
+            }
+
+
+
+            function armazenarDados(event) {
+                event.preventDefault();
+                //Adiciona ou modifica um aluno de ListaAlunos
+                if (idAcao == 0) {
+                    alunosSeq += 1;
+                    ListaAlunos.Alunos.push({matricula: campo_matricula.value, nome: campo_nome.value, ano: campo_ano.value, id: alunosSeq});
+                }
+                else{
+                    ListaAlunos.Alunos.forEach(e => {
+                        if (e.id == idAcao){
+                            var indice = ListaAlunos.Alunos.indexOf(e);
+                            ListaAlunos.Alunos.splice(indice, 1, {matricula: campo_matricula.value, nome: campo_nome.value, ano: campo_ano.value, id: idAcao});
+                        }
+                    });
+                }
+                myJSON = JSON.stringify(ListaAlunos);
+                localStorage.setItem("ListaAlunos", myJSON);
+                localStorage.setItem("alunosSeq", alunosSeq);
+                window.location.assign("index.html");
+            }
+
+            function preencheCamposEditar() {                
+                    if (idAcao != 0) {
+                        var valorMatricula;
+                        var valorNome;
+                        var valorAno;
+                        ListaAlunos.Alunos.forEach(e => {
+                            if (e.id == idAcao){
+                                valorMatricula = e.matricula;
+                                valorNome = e.nome;
+                                valorAno = e.ano;
+                            }
+                        });
+                        campo_matricula.setAttribute("value", valorMatricula);
+                        campo_nome.setAttribute("value", valorNome);
+                        campo_ano.setAttribute("value", valorAno);
+                }
+            }
+
+            //Rotina Principal
+
+            window.onload = preencheCamposEditar();
+
+            botao_confirmar.addEventListener("click", verificaDados);
+            botao_cancelar.addEventListener("click", function(){
+                window.location.assign("index.html");
+            });
+            
+            //Definindo o tipo dos campos matrícula e ano como number
+            campo_matricula.setAttribute("type", "number");
+            campo_ano.setAttribute("type", "number");
+                
+        </script>
+    </body>
+</html>
