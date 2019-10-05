@@ -1,0 +1,136 @@
+<!DOCTYPE html lang="pt-br">
+
+<html>
+    <head>
+        <meta charset="="utf-8>
+        <link rel="stylesheet" href="css/estilo_index.css">
+        <title>Listagem de Alunos</title>
+    </head>
+
+    <body>
+        <div class="container">
+            <header>
+                <h1>Universidade Equipe Orbitais</h1>
+            </header>
+            <main>
+                <h2>Lista de Alunos</h2>
+                <div>
+                    <img id="icone_cadastro" class="icone_cadastro" src="imagens/plus_icon.png" alt="">
+                    <p>Cadastrar novo Aluno</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Matricula</th>
+                                <th>Nome</th>
+                                <th>Ano de Ingresso</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                        </tbody>
+
+                    </table>
+                </div>
+            </main>
+            <script>
+                
+                //Variáveis globais
+                var ListaAlunos;
+                var corpo_tabela = document.querySelector("table tbody");
+                var cadastrarAlunoBtn = document.querySelector("#icone_cadastro");
+                var editarBtn = [];
+                var removerBtn = [];
+                
+                //JSON
+                var myJSON;
+
+                //Funções
+                function carregaTabela() {
+                    ListaAlunos = JSON.parse(localStorage.getItem("ListaAlunos"));
+                    if (!ListaAlunos){
+                        ListaAlunos = {Alunos:[]};
+                    }
+                    ListaAlunos.Alunos.forEach(criar_linha_aluno);
+
+                }
+
+                function criar_linha_aluno(e, i) {
+                    //criar elementos da linha do aluno
+                    var linha = document.createElement("tr");
+                    var campo_matricula = document.createElement("td");
+                    var campo_nome = document.createElement("td");
+                    var campo_ano = document.createElement("td");
+                    var campo_acoes = document.createElement("td");
+                    var img_editar = document.createElement("img");
+                    var img_remover = document.createElement("img");
+                    
+
+                    //Criar o conteúdo da linha criada
+                    var text_matricula = e.matricula;
+                    var text_nome = e.nome;
+                    var text_ano = e.ano;
+                    img_editar.setAttribute("src", "imagens/edit-icon.jpg");
+                    img_remover.setAttribute("src", "imagens/trash_icon.png");
+
+                    
+                    img_editar.id = e.id;
+                    img_remover.id = e.id;
+
+                    editarBtn.push(img_editar);
+                    removerBtn.push(img_remover);
+
+                    //Vincular o conteúdo aos elementos da linha criada
+                    campo_matricula.innerHTML = text_matricula;
+                    campo_nome.innerHTML = text_nome;
+                    campo_ano.innerHTML = text_ano;
+                    campo_acoes.appendChild(img_editar);
+                    campo_acoes.appendChild(img_remover);
+                            
+                    linha.appendChild(campo_matricula);
+                    linha.appendChild(campo_nome);
+                    linha.appendChild(campo_ano);
+                    linha.appendChild(campo_acoes);
+                    
+                    //Vincular os elementos da linha criada ao documento
+                    corpo_tabela.appendChild(linha);               
+                }
+
+                function editarAluno(e) {
+                    e.addEventListener("click", function(){
+                        localStorage.setItem("idAcao", e.id);
+                        window.location.assign("formulario.html");
+                    });
+                }
+
+                function removerAluno(e) {
+                    e.addEventListener("click", function(){
+                        
+                        for (let i = 0; i < ListaAlunos.Alunos.length; i++) {
+                            if(ListaAlunos.Alunos[i].id == e.id){
+                                ListaAlunos.Alunos.splice(i, 1);
+                                myJSON = JSON.stringify(ListaAlunos);
+                                localStorage.setItem("ListaAlunos", myJSON);
+                                break;
+                            } 
+                        }
+                        window.location.reload();
+                    });
+                    
+                }
+
+                function cadastrarAluno(event) {
+                    localStorage.setItem("idAcao", 0);
+                    window.location.assign("formulario.html");
+                }
+
+                //Rotina principal
+                window.onload = carregaTabela();
+                cadastrarAlunoBtn.addEventListener("click", cadastrarAluno);
+                editarBtn.forEach(editarAluno);
+                removerBtn.forEach(removerAluno);
+
+            </script>
+        </div>
+    </body>
+</html>
