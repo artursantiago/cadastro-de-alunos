@@ -17,19 +17,16 @@
                     <p>Página Inicial</p>
 
                     <form action="">
-                        <label for="nome">Nome Completo: </label>
-                        <input class="nome" type="text" name="nome" maxlength="50">
-                        <br>
                         <label for="matricula">Matricula:</label>
                         <input class="matricula" name="matricula" maxlength="50">
                         <br>
-                        <label for="curso">Curso: </label>
-                        <input class="curso" type="text" name="curso" maxlength="50">
+                        <label for="nome">Nome: </label>
+                        <input class="nome" type="text" name="nome" maxlength="50">
                         <br>
                         <label for="ano">Ano de Ingresso: </label>
                         <input class="ano" name="ano">
                         <br>
-                        <input class="confirmarBtn" type="submit" value="Confirmar">
+                        <input class="confirmarBtn" type="submit" value="Connfirmar">
                         <a href="index.html"><input class="cancelarBtn" type="button" value="Cancelar"></a>
                     </form>
                 </div>
@@ -65,11 +62,13 @@
             //Funções
             function verificaDados(event) {
                 //Validação dos campos do formulário
-                var regex = /^[a-zA-ZéúíóáÉÚÍÓÁèùìòàçÇÈÙÌÒÀõãñÕÃÑêûîôâÊÛÎÔÂëÿüïöäËYÜÏÖÄ\-\ \s]+$/;
+                //var regex = /^[a-zA-ZéúíóáÉÚÍÓÁèùìòàçÇÈÙÌÒÀõãñÕÃÑêûîôâÊÛÎÔÂëÿüïöäËYÜÏÖÄ\-\ \s]+$/;
+                var regex = /[^a-zA-Z ]/;
+                campo_nome.value = campo_nome.value.trim();
                 if (campo_matricula.value == "" || campo_nome.value == "" || campo_ano.value == "") {
                     alert("Dados Inválidos! Tente Novamente.");
                 }
-                else if (! campo_nome.value.match(regex)) {
+                else if (campo_nome.value.match(regex)) {
                     alert("Nome Inválido!");
                 }
                 else if(campo_matricula.value.length > 50){
