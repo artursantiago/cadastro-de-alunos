@@ -9,4 +9,4 @@ Tecnologias usadas:
 
 *Note: O localstorage foi usado como recurso para aramazenar as informações*
 
-**Obs: A validação dos campos do formulário ainda está em fase de aperfeiçoamento.**
+**Obs: A validação dos campos do formulário ainda está em fase de aperfeiçoamento.** [ ]
