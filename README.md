@@ -1,6 +1,4 @@
-# Projeto: Cadastro
-
-Um simples projeto contendo um formulário para cadastro de alunos, interligado com uma tabela dinâmica, com opções de editar e remover alunos já cadastrados.
+# Cadastro de Alunos
 
 Tecnologias usadas:
 * HTML
