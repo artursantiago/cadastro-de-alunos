@@ -1,4 +1,5 @@
 # Cadastro de Alunos
+Este projeto consiste em um CRUD simples.
 
 Tecnologias usadas:
 * HTML
