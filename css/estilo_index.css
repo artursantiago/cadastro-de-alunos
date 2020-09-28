@@ -23,6 +23,7 @@ main div{
 }
 
 main .icone_cadastro, img{
+    cursor: pointer;
     width: 20px;
 }
 
