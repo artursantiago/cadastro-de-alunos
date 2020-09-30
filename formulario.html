@@ -33,8 +33,8 @@
             </main>
         </div>
         <script>
-
             //Variáveis Globais - HTML
+            var ListaAlunos;    
             var campo_matricula = document.querySelector("input.matricula");
             var campo_nome = document.querySelector("input.nome");
             var campo_ano = document.querySelector("input.ano");
@@ -82,6 +82,12 @@
                 if (campo_matricula.value == "" || campo_nome.value == "" || campo_ano.value == "") {
                     alert("Dados Inválidos! Tente Novamente.");
                 }
+                else if(validaMatricula(campo_matricula.value)) {
+                    alert("Já existe um aluno cadastrado com essa matricula! Tente novamente.");
+                }
+                else if(validaNome(campo_nome.value)) {
+                    alert("Já existe um aluno cadastrado com esse nome! Tente novamente.");
+                }
                 else{
                     armazenarDados(event);
                 }
@@ -123,6 +129,32 @@
                         campo_matricula.setAttribute("value", valorMatricula);
                         campo_nome.setAttribute("value", valorNome);
                         campo_ano.setAttribute("value", valorAno);
+                }
+            }
+ 
+            function validaMatricula(matricula){
+                ListaAlunos = JSON.parse(localStorage.getItem("ListaAlunos"));  
+                if (!ListaAlunos){
+                    return false;
+                }
+
+                for(var i = 0; i < ListaAlunos.Alunos.length; i++){
+                    if(ListaAlunos.Alunos[i].matricula == matricula){
+                        return true;
+                    }
+                }
+            }
+ 
+            function validaNome(nome){
+                ListaAlunos = JSON.parse(localStorage.getItem("ListaAlunos"));  
+                if (!ListaAlunos){
+                    return false;
+                }
+
+                for(var i = 0; i < ListaAlunos.Alunos.length; i++){
+                    if(ListaAlunos.Alunos[i].nome == nome){
+                        return true;
+                    }
                 }
             }
 
